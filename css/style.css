@@ -247,7 +247,7 @@ body {
 .text-outline {
   color: var(--bg-1);
   -webkit-text-fill-color: var(--bg-1);
-  -webkit-text-stroke: 2.5px var(--text);
+  -webkit-text-stroke: 4pt var(--text);
   stroke: var(--text);
   paint-order: stroke fill;
 }
