@@ -254,6 +254,10 @@ body {
 
 .text-solid {
   color: var(--text);
+  -webkit-text-fill-color: var(--text);
+  -webkit-text-stroke: 4pt var(--text);
+  stroke: var(--text);
+  paint-order: stroke fill;
   font-weight: 900;
 }
 
