@@ -26,6 +26,25 @@
   --font-zh: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
+/* =========================================================
+   Dark theme overrides
+   ========================================================= */
+[data-theme="dark"] {
+  --bg-1: #0b1218;
+  --bg-2: #0f1a22;
+  --bg-3: #13202a;
+  --text: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --accent-strong: #5eead4;
+  --accent-soft: rgba(0, 201, 201, 0.22);
+  --accent-light: rgba(0, 201, 201, 0.12);
+  --card-bg: rgba(15, 23, 42, 0.72);
+  --card-border: rgba(255, 255, 255, 0.10);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -195,16 +214,8 @@ body {
 }
 
 .text-outline {
-  color: var(--bg-1);
-  text-shadow:
-    -1.5px -1.5px 0 var(--text),
-    1.5px -1.5px 0 var(--text),
-    -1.5px 1.5px 0 var(--text),
-    1.5px 1.5px 0 var(--text),
-    0 -1.5px 0 var(--text),
-    0 1.5px 0 var(--text),
-    -1.5px 0 0 var(--text),
-    1.5px 0 0 var(--text);
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text);
 }
 
 .text-solid {
@@ -535,6 +546,14 @@ body {
   transform: translateY(-1px);
 }
 
+[data-theme="dark"] .nav-btn::before {
+  background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 100%);
+}
+
+[data-theme="dark"] .nav-btn:hover {
+  color: var(--bg-1);
+}
+
 .nav-btn:focus-visible,
 .back-btn:focus-visible,
 .tag:focus-visible {
@@ -550,6 +569,47 @@ body {
   padding: 24px 0 48px;
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* =========================================================
+   Theme Toggle
+   ========================================================= */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--card-border);
+  border-radius: 50%;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-hover);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--accent-strong);
+  outline-offset: 3px;
+}
+
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  flex-shrink: 0;
 }
 
 /* =========================================================
@@ -812,6 +872,18 @@ body {
   .work-meta-item:nth-child(n) {
     text-align: left;
     align-items: flex-start;
+  }
+
+  .theme-toggle {
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
