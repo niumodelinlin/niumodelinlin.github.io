@@ -261,6 +261,13 @@ body {
   font-weight: 900;
 }
 
+/* 子页面标题描边较细 */
+.page-title .text-outline,
+.page-title .text-solid {
+  -webkit-text-stroke: 2pt var(--text);
+  stroke: 2pt var(--text);
+}
+
 .hero-subtitle {
   font-size: clamp(28px, 6vw, 48px);
   font-weight: 700;
