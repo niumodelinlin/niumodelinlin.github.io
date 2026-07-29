@@ -40,8 +40,10 @@
         }
       });
     }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -24px 0px'
+      // threshold 设为 0：只要元素与视口相交（哪怕只有 1px）就触发。
+      // 之前用 0.1 会导致超长作品图（如 25638px 高）永远达不到 10% 可见而一直 opacity:0。
+      threshold: 0,
+      rootMargin: '0px 0px 50px 0px'
     });
 
     revealEls.forEach(function (el) { observer.observe(el); });
