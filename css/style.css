@@ -696,6 +696,13 @@ body {
   background: var(--accent-light);
 }
 
+/* 项目底部居中的返回首页按钮容器 */
+.back-home {
+  display: flex;
+  justify-content: center;
+  margin: 56px 0 24px;
+}
+
 .page-content {
   min-height: 50vh;
   padding: 40px 0;
