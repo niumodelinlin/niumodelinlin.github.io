@@ -933,8 +933,10 @@ body {
   }
 }
 
-/* 滚动入场动画（IntersectionObserver 驱动） */
-.reveal {
+/* 滚动入场动画（IntersectionObserver 驱动，渐进增强）
+   注意：默认（无 .js）内容完全可见；仅当 JS 确认可用（<html class="js">）才隐藏待入场元素，
+   避免脚本未加载/报错时图片与文字停留在 opacity:0 而“消失”。 */
+.js .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -942,7 +944,7 @@ body {
   will-change: opacity, transform;
 }
 
-.reveal.is-visible {
+.js .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -953,7 +955,7 @@ body {
     animation-duration: 0.01ms !important;
   }
 
-  .reveal {
+  .js .reveal {
     opacity: 1;
     transform: none;
     transition: none;
