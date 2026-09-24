@@ -1,0 +1,258 @@
+{
+  "$schema": "https://design-tokens.org/schema.json",
+  "$description": "小红书「同频」轻互动原型 — Design Tokens。平台：mobile-web 375×812（包手机外壳）。设计寄存器：Product（忠实还原小红书原生视觉语言）。所有颜色禁止在组件内硬编码，一律引用 token。",
+  "meta": {
+    "project": "xhs-light-interaction / 同频",
+    "designer": "颜好看",
+    "version": "1.0.0",
+    "date": "2026-09-22",
+    "register": "product",
+    "platform": "mobile-web (ios-shell, 375x812)",
+    "designVariance": 2,
+    "motionIntensity": 6,
+    "visualDensity": 5,
+    "iconLibrary": "lucide (stroke outline set, locked)",
+    "iconStrokeWidth": 1.75,
+    "fontFamily": "PingFang SC"
+  },
+
+  "color": {
+    "primitive": {
+      "red-50":    { "value": "#FFF1F3", "type": "color" },
+      "red-100":   { "value": "#FFE3E7", "type": "color" },
+      "red-200":   { "value": "#FFC9D2", "type": "color" },
+      "red-500":   { "value": "#FF2442", "type": "color" },
+      "red-600":   { "value": "#E61E3A", "type": "color" },
+      "red-700":   { "value": "#CC1A33", "type": "color" },
+      "red-800":   { "value": "#E11D37", "type": "color" },
+      "neutral-0": { "value": "#FFFFFF", "type": "color" },
+      "neutral-50":{ "value": "#F7F7F8", "type": "color" },
+      "neutral-75":{ "value": "#F0F0F0", "type": "color" },
+      "neutral-100":{ "value": "#EEEEEE", "type": "color" },
+      "neutral-200":{ "value": "#DDDDDD", "type": "color" },
+      "neutral-300":{ "value": "#BBBBBB", "type": "color" },
+      "neutral-400":{ "value": "#999999", "type": "color" },
+      "neutral-600":{ "value": "#666666", "type": "color" },
+      "neutral-800":{ "value": "#333333", "type": "color" },
+      "neutral-900":{ "value": "#1A1A1A", "type": "color" },
+      "blue-600":  { "value": "#2F6BD8", "type": "color" },
+      "green-500": { "value": "#07C160", "type": "color" },
+      "orange-500":{ "value": "#FF8C00", "type": "color" }
+    },
+
+    "semantic": {
+      "primary":            { "value": "{color.primitive.red-500}", "type": "color", "$description": "小红书红，品牌主色。每屏可见使用 ≤2 处" },
+      "primary-hover":      { "value": "{color.primitive.red-600}", "type": "color" },
+      "primary-active":     { "value": "{color.primitive.red-700}", "type": "color" },
+      "primary-soft":       { "value": "{color.primitive.red-50}",  "type": "color", "$description": "浅粉底，用于回礼按钮底/选中态/倒计时 chip 底" },
+      "primary-soft-hover": { "value": "{color.primitive.red-100}", "type": "color" },
+      "primary-disabled":   { "value": "{color.primitive.red-200}", "type": "color", "$description": "发送按钮禁用态底" },
+      "primary-ink":        { "value": "{color.primitive.neutral-0}", "type": "color", "$description": "红底上的前景白" },
+      "primary-text":       { "value": "{color.primitive.red-800}", "type": "color", "$description": "小号红字专用（对比度 4.7:1 达 AA），当红字 <18px 时使用" },
+
+      "bg":        { "value": "{color.primitive.neutral-0}",  "type": "color", "$description": "页面底" },
+      "bg-page":   { "value": "{color.primitive.neutral-50}", "type": "color", "$description": "灰底页（消息列表兜底）" },
+      "surface":   { "value": "{color.primitive.neutral-0}",  "type": "color", "$description": "卡片/浮层/气泡底" },
+      "surface-2": { "value": "{color.primitive.neutral-75}", "type": "color", "$description": "输入框底/对方气泡底/表情面板底" },
+      "surface-3": { "value": "{color.primitive.neutral-100}","type": "color", "$description": "hover/按下浅灰" },
+
+      "fg":          { "value": "{color.primitive.neutral-900}", "type": "color", "$description": "标题/昵称/主文字" },
+      "fg-body":     { "value": "{color.primitive.neutral-800}", "type": "color", "$description": "正文" },
+      "fg-muted":    { "value": "{color.primitive.neutral-600}", "type": "color", "$description": "次级文字" },
+      "fg-meta":     { "value": "{color.primitive.neutral-400}", "type": "color", "$description": "时间/位置/辅助信息" },
+      "fg-placeholder": { "value": "{color.primitive.neutral-300}", "type": "color" },
+      "fg-icon":     { "value": "{color.primitive.neutral-900}", "type": "color", "$description": "未激活描边图标色" },
+      "fg-icon-muted": { "value": "{color.primitive.neutral-600}", "type": "color" },
+
+      "border":     { "value": "{color.primitive.neutral-100}", "type": "color" },
+      "divider":    { "value": "{color.primitive.neutral-75}",  "type": "color", "$description": "操作栏上边线/列表分隔" },
+      "chip-bg":    { "value": "{color.primitive.neutral-75}",  "type": "color" },
+
+      "like":       { "value": "{color.primitive.red-500}", "type": "color", "$description": "点赞红（=主色，即已点赞态）" },
+      "topic":      { "value": "{color.primitive.blue-600}","type": "color", "$description": "正文话题 #标签 蓝" },
+      "collect":    { "value": "{color.primitive.neutral-900}", "type": "color", "$description": "收藏星默认色（未激活黑描边）" },
+
+      "success": { "value": "{color.primitive.green-500}",  "type": "color" },
+      "warn":    { "value": "{color.primitive.orange-500}", "type": "color" },
+      "danger":  { "value": "{color.primitive.red-500}",    "type": "color" },
+
+      "overlay-mask": { "value": "rgba(0,0,0,0.45)", "type": "color", "$description": "半屏浮层遮罩" },
+      "bubble-other": { "value": "{color.primitive.neutral-75}", "type": "color" },
+      "bubble-self":  { "value": "{color.primitive.red-500}",    "type": "color" },
+      "bubble-self-ink": { "value": "{color.primitive.neutral-0}", "type": "color" },
+
+      "focus-ring": { "value": "rgba(255,36,66,0.35)", "type": "color" }
+    },
+
+    "component": {
+      "actionbar-bg":       { "value": "{color.semantic.surface}", "type": "color" },
+      "actionbar-border":   { "value": "{color.semantic.divider}", "type": "color" },
+      "like-idle-icon":     { "value": "{color.semantic.fg-icon}", "type": "color" },
+      "like-active-icon":   { "value": "{color.semantic.like}",    "type": "color" },
+      "like-active-text":   { "value": "{color.semantic.like}",    "type": "color" },
+      "gift-btn-bg":        { "value": "{color.semantic.primary-soft}", "type": "color" },
+      "gift-btn-bg-press":  { "value": "{color.semantic.primary-soft-hover}", "type": "color" },
+      "gift-btn-text":      { "value": "{color.semantic.primary-text}", "type": "color" },
+      "countdown-chip-bg":  { "value": "{color.semantic.primary-soft}", "type": "color" },
+      "countdown-chip-text":{ "value": "{color.semantic.primary-text}", "type": "color" },
+      "sticker-cell-bg":    { "value": "{color.semantic.surface}", "type": "color" },
+      "sticker-cell-bg-sel":{ "value": "{color.semantic.primary-soft}", "type": "color" },
+      "sticker-cell-ring":  { "value": "{color.semantic.primary}", "type": "color" },
+      "sheet-bg":           { "value": "{color.semantic.surface}", "type": "color" },
+      "sheet-handle":       { "value": "{color.primitive.neutral-200}", "type": "color" },
+      "input-bg":           { "value": "{color.semantic.surface-2}", "type": "color" },
+      "input-text":         { "value": "{color.semantic.fg-body}", "type": "color" },
+      "send-btn-bg":        { "value": "{color.semantic.primary}", "type": "color" },
+      "send-btn-bg-disabled": { "value": "{color.semantic.primary-disabled}", "type": "color" },
+      "send-btn-text":      { "value": "{color.semantic.primary-ink}", "type": "color" },
+      "topic-link":         { "value": "{color.semantic.topic}", "type": "color" }
+    }
+  },
+
+  "font": {
+    "family": {
+      "base": { "value": "\"PingFang SC\", -apple-system, \"Helvetica Neue\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif", "type": "fontFamily" },
+      "number": { "value": "\"SF Pro Text\", \"PingFang SC\", sans-serif", "type": "fontFamily", "$description": "倒计时/计数用 tabular-nums" }
+    },
+    "size": {
+      "2xs": { "value": "10px", "type": "dimension", "$description": "TabBar 标签" },
+      "xs":  { "value": "11px", "type": "dimension", "$description": "角标/最小辅助" },
+      "sm":  { "value": "12px", "type": "dimension", "$description": "时间/位置/次级元信息" },
+      "md":  { "value": "13px", "type": "dimension", "$description": "计数/标签/chip" },
+      "base":{ "value": "14px", "type": "dimension", "$description": "次要正文" },
+      "lg":  { "value": "15px", "type": "dimension", "$description": "评论区/消息卡正文/气泡" },
+      "xl":  { "value": "16px", "type": "dimension", "$description": "笔记标题/导航标题/CTA" },
+      "2xl": { "value": "17px", "type": "dimension", "$description": "笔记正文/主标题" },
+      "3xl": { "value": "20px", "type": "dimension", "$description": "页面大标题" }
+    },
+    "weight": {
+      "regular":  { "value": 400, "type": "fontWeight" },
+      "medium":   { "value": 500, "type": "fontWeight" },
+      "semibold": { "value": 600, "type": "fontWeight" }
+    },
+    "lineHeight": {
+      "tight":   { "value": 1.25, "type": "number" },
+      "normal":  { "value": 1.4,  "type": "number" },
+      "relaxed": { "value": 1.6,  "type": "number", "$description": "笔记正文/长文本" }
+    },
+    "letterSpacing": {
+      "tight":  { "value": "-0.02em", "type": "dimension", "$description": "≥20px 标题" },
+      "normal": { "value": "0",       "type": "dimension" },
+      "wide":   { "value": "0.02em",  "type": "dimension", "$description": "小号大写/字母标签" }
+    }
+  },
+
+  "space": {
+    "0": { "value": "0",    "type": "dimension" },
+    "1": { "value": "4px",  "type": "dimension" },
+    "2": { "value": "8px",  "type": "dimension" },
+    "3": { "value": "12px", "type": "dimension" },
+    "4": { "value": "16px", "type": "dimension" },
+    "5": { "value": "20px", "type": "dimension" },
+    "6": { "value": "24px", "type": "dimension" },
+    "8": { "value": "32px", "type": "dimension" },
+    "10":{ "value": "40px", "type": "dimension" },
+    "12":{ "value": "48px", "type": "dimension" }
+  },
+
+  "radius": {
+    "xs":   { "value": "2px",    "type": "dimension" },
+    "sm":   { "value": "4px",    "type": "dimension" },
+    "md":   { "value": "8px",    "type": "dimension" },
+    "lg":   { "value": "12px",   "type": "dimension", "$description": "卡片/浮层" },
+    "xl":   { "value": "16px",   "type": "dimension", "$description": "气泡/大卡" },
+    "pill": { "value": "9999px", "type": "dimension", "$description": "按钮/输入框/头像/chip" }
+  },
+
+  "shadow": {
+    "none":  { "value": "none", "type": "boxShadow" },
+    "sm":    { "value": "0 1px 2px rgba(0,0,0,0.04)", "type": "boxShadow" },
+    "md":    { "value": "0 4px 12px rgba(0,0,0,0.08)", "type": "boxShadow" },
+    "lg":    { "value": "0 8px 24px rgba(0,0,0,0.12)", "type": "boxShadow" },
+    "sheet": { "value": "0 -4px 24px rgba(0,0,0,0.12)", "type": "boxShadow", "$description": "底部半屏浮层顶部阴影" },
+    "bar":   { "value": "0 -1px 0 0 rgba(0,0,0,0.06)", "type": "boxShadow" }
+  },
+
+  "size": {
+    "viewport-w":   { "value": "375px", "type": "dimension" },
+    "viewport-h":   { "value": "812px", "type": "dimension" },
+    "safe-top":     { "value": "44px",  "type": "dimension", "$description": "iOS 状态栏+导航占位（原型内显式绘制）" },
+    "safe-bottom":  { "value": "34px",  "type": "dimension", "$description": "iPhone Home Indicator" },
+    "navbar-h":     { "value": "44px",  "type": "dimension" },
+    "tabbar-h":     { "value": "49px",  "type": "dimension" },
+    "actionbar-h":  { "value": "52px",  "type": "dimension" },
+    "inputbar-h":   { "value": "52px",  "type": "dimension" },
+    "sheet-h":      { "value": "487px", "type": "dimension", "$description": "同频空间浮层 ≈ 60% × 812" },
+    "sheet-max-h":  { "value": "60vh",  "type": "dimension" },
+    "hit-min":      { "value": "44px",  "type": "dimension", "$description": "最小可点击区域" },
+    "icon-inline":  { "value": "16px", "type": "dimension" },
+    "icon-btn":     { "value": "20px", "type": "dimension" },
+    "icon-action":  { "value": "24px", "type": "dimension", "$description": "底部操作栏图标（含三态赞）" },
+    "avatar-sm":    { "value": "32px", "type": "dimension" },
+    "avatar-md":    { "value": "44px", "type": "dimension" },
+    "avatar-lg":    { "value": "48px", "type": "dimension" },
+    "thumb":        { "value": "56px", "type": "dimension" },
+    "gutter":       { "value": "12px", "type": "dimension", "$description": "页面横向安全边距（导航/操作栏/列表）" },
+    "gutter-content": { "value": "16px", "type": "dimension", "$description": "笔记正文横向边距" }
+  },
+
+  "border": {
+    "width-hairline": { "value": "0.5px", "type": "dimension" },
+    "width-thin":     { "value": "1px",   "type": "dimension" },
+    "width-focus":    { "value": "2px",   "type": "dimension" },
+    "width-selected": { "value": "1.5px", "type": "dimension" }
+  },
+
+  "motion": {
+    "duration": {
+      "instant": { "value": "100ms", "type": "duration", "$description": "按下反馈/按钮 scale" },
+      "fast":    { "value": "150ms", "type": "duration", "$description": "三态切换/选中/hover —— 全局收敛值" },
+      "base":    { "value": "200ms", "type": "duration", "$description": "Toast 进入/遮罩淡入/卡片 morph" },
+      "slow":    { "value": "280ms", "type": "duration", "$description": "浮层上滑入场" },
+      "deliberate": { "value": "400ms", "type": "duration", "$description": "仅限首次引导类动画，需说明理由" }
+    },
+    "ease": {
+      "standard": { "value": "cubic-bezier(0.25, 0.1, 0.25, 1)", "type": "cubicBezier" },
+      "out":      { "value": "cubic-bezier(0.33, 1, 0.68, 1)",   "type": "cubicBezier", "$description": "decelerate —— 进入/切换默认" },
+      "in":       { "value": "cubic-bezier(0.32, 0, 0.67, 0)",   "type": "cubicBezier", "$description": "退出/收起" },
+      "in-out":   { "value": "cubic-bezier(0.65, 0, 0.35, 1)",   "type": "cubicBezier" }
+    },
+    "forbidden": {
+      "elastic": { "value": "banned", "$description": "P0 禁止：弹性/回跳缓动（overshoot bezier）。三态切换的『微弹』用 scale 关键帧 + ease-out 实现，全系统不使用任何弹性曲线" }
+    },
+    "iconSwap": {
+      "duration": { "value": "150ms", "type": "duration" },
+      "ease":     { "value": "cubic-bezier(0.33, 1, 0.68, 1)", "type": "cubicBezier" },
+      "scaleKeyframes": { "value": "scale(1) → scale(1.14) → scale(1)", "$description": "40% 处峰值 1.14，ease-out。非弹性" }
+    },
+    "sheet": {
+      "enterDuration": { "value": "280ms", "type": "duration" },
+      "exitDuration":  { "value": "220ms", "type": "duration" },
+      "maskDuration":  { "value": "200ms", "type": "duration" },
+      "enterEase": { "value": "cubic-bezier(0.33, 1, 0.68, 1)", "type": "cubicBezier" },
+      "exitEase":  { "value": "cubic-bezier(0.32, 0, 0.67, 0)", "type": "cubicBezier" }
+    },
+    "toast": {
+      "enterDuration": { "value": "200ms", "type": "duration" },
+      "holdDuration":  { "value": "1600ms", "type": "duration" },
+      "exitDuration":  { "value": "150ms", "type": "duration" }
+    },
+    "stagger": { "value": "40ms", "type": "duration", "$description": "列表/网格入场逐项延迟，最多作用于 3 项" }
+  },
+
+  "zIndex": {
+    "base":     { "value": 0 },
+    "sticky":   { "value": 100 },
+    "actionbar":{ "value": 200 },
+    "mask":     { "value": 900 },
+    "sheet":    { "value": 1000 },
+    "toast":    { "value": 1100 }
+  },
+
+  "a11y": {
+    "focusRing": { "value": "0 0 0 2px #FFFFFF, 0 0 0 4px rgba(255,36,66,0.55)", "type": "boxShadow" },
+    "minContrast": { "value": "4.5:1", "type": "string" },
+    "minHitTarget": { "value": "44px", "type": "dimension" },
+    "reducedMotion": { "value": "prefers-reduced-motion: reduce → 全部时长降为 0ms，仅保留 opacity 0↔1 切换", "type": "string" }
+  }
+}

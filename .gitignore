@@ -2,3 +2,6 @@
 assets/pdf-pages/
 *.DS_Store
 _shots/
+.venv/
+__pycache__/
+*.pyc

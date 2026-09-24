@@ -1,0 +1,285 @@
+/* ==========================================================================
+   小红书「同频」轻互动原型 — Design Tokens (CSS Variables)
+   Project : xhs-light-interaction / 同频
+   Designer: 颜好看   |  Version: 1.0.0  |  Date: 2026-09-22
+   Register: Product   |  Platform: mobile-web 375×812 (iOS shell)
+   --------------------------------------------------------------------------
+   使用方式：在入口 import 本文件，所有组件样式一律引用 var(--*)。
+   [禁止] 禁止在组件内硬编码颜色值（唯一例外：#fff / #000 亦已 token 化）。
+   [禁止] 禁止使用 emoji 作为功能性图标 → 统一走 --icon-* + Lucide 描边 SVG。
+   [禁止] 禁止紫色→粉色渐变；本系统主色为小红书红 #FF2442。
+   [禁止] 禁止弹性/回跳缓动（overshoot bezier，P0 红线）。
+   ========================================================================== */
+
+:root {
+  /* ============ A1 · Identity — 颜色 primitive ============ */
+  --red-50:  #FFF1F3;
+  --red-100: #FFE3E7;
+  --red-200: #FFC9D2;
+  --red-500: #FF2442;   /* 小红书红 · 品牌基准 */
+  --red-600: #E61E3A;
+  --red-700: #CC1A33;
+  --red-800: #E11D37;   /* 小号红字专用（AA 4.7:1） */
+
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F7F7F8;
+  --neutral-75:  #F0F0F0;
+  --neutral-100: #EEEEEE;
+  --neutral-200: #DDDDDD;
+  --neutral-300: #BBBBBB;
+  --neutral-400: #999999;
+  --neutral-600: #666666;
+  --neutral-800: #333333;
+  --neutral-900: #1A1A1A;
+
+  --blue-600:   #2F6BD8;   /* 话题蓝 */
+  --green-500:  #07C160;
+  --orange-500: #FF8C00;
+
+  /* ============ A2 · Semantic — 语义色 ============ */
+  --color-primary:            var(--red-500);
+  --color-primary-hover:      var(--red-600);
+  --color-primary-active:     var(--red-700);
+  --color-primary-soft:       var(--red-50);    /* 回礼底 / 选中底 / 倒计时 chip 底 */
+  --color-primary-soft-hover: var(--red-100);
+  --color-primary-disabled:   var(--red-200);   /* 发送按钮禁用底 */
+  --color-primary-ink:        var(--neutral-0); /* 红底白字 */
+  --color-primary-text:       var(--red-800);   /* <18px 红字，达 AA */
+
+  --color-bg:         var(--neutral-0);
+  --color-bg-page:    var(--neutral-50);
+  --color-surface:    var(--neutral-0);         /* 卡片/浮层/气泡底 */
+  --color-surface-2:  var(--neutral-75);        /* 输入框底/对方气泡/表情面板 */
+  --color-surface-3:  var(--neutral-100);       /* hover 浅灰 */
+
+  --color-fg:            var(--neutral-900);    /* 标题/昵称 */
+  --color-fg-body:       var(--neutral-800);    /* 正文 */
+  --color-fg-muted:      var(--neutral-600);    /* 次级 */
+  --color-fg-meta:       var(--neutral-400);    /* 时间/位置 */
+  --color-fg-placeholder:var(--neutral-300);
+  --color-fg-icon:       var(--neutral-900);    /* 未激活描边图标 */
+  --color-fg-icon-muted: var(--neutral-600);
+
+  --color-border:   var(--neutral-100);
+  --color-divider:  var(--neutral-75);          /* 操作栏上边线 */
+  --color-chip-bg:  var(--neutral-75);
+
+  --color-like:    var(--red-500);              /* 点赞红 = 主色 */
+  --color-topic:   var(--blue-600);             /* #话题 蓝 */
+  --color-collect: var(--neutral-900);
+
+  --color-success: var(--green-500);
+  --color-warn:    var(--orange-500);
+  --color-danger:  var(--red-500);
+
+  --color-overlay-mask:    rgba(0, 0, 0, 0.45);
+  --color-bubble-other:    var(--neutral-75);
+  --color-bubble-self:     var(--red-500);
+  --color-bubble-self-ink: var(--neutral-0);
+  --color-focus-ring:      rgba(255, 36, 66, 0.35);
+
+  /* ============ B · Slot — 组件专用 ============ */
+  --actionbar-bg:        var(--color-surface);
+  --actionbar-border:    var(--color-divider);
+  --like-idle-icon:      var(--color-fg-icon);
+  --like-active-icon:    var(--color-like);
+  --like-active-text:    var(--color-like);
+  --gift-btn-bg:         var(--color-primary-soft);
+  --gift-btn-bg-press:   var(--color-primary-soft-hover);
+  --gift-btn-text:       var(--color-primary-text);
+  --countdown-chip-bg:   var(--color-primary-soft);
+  --countdown-chip-text: var(--color-primary-text);
+  --sticker-cell-bg:     var(--color-surface);
+  --sticker-cell-bg-sel: var(--color-primary-soft);
+  --sticker-cell-ring:   var(--color-primary);
+  --sheet-bg:            var(--color-surface);
+  --sheet-handle:        var(--neutral-200);
+  --input-bg:            var(--color-surface-2);
+  --input-text:          var(--color-fg-body);
+  --send-btn-bg:         var(--color-primary);
+  --send-btn-bg-disabled:var(--color-primary-disabled);
+  --send-btn-text:       var(--color-primary-ink);
+  --topic-link:          var(--color-topic);
+
+  /* ============ A1 · Typography ============ */
+  --font-family-base: "PingFang SC", -apple-system, "Helvetica Neue",
+                      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-family-number: "SF Pro Text", "PingFang SC", sans-serif;
+
+  --font-size-2xs: 10px;   /* TabBar 标签 */
+  --font-size-xs:  11px;
+  --font-size-sm:  12px;   /* 时间/位置/元信息 */
+  --font-size-md:  13px;   /* 计数/chip */
+  --font-size-base:14px;
+  --font-size-lg:  15px;   /* 评论区/消息卡/气泡 */
+  --font-size-xl:  16px;   /* 标题/导航/CTA */
+  --font-size-2xl: 17px;   /* 笔记正文 */
+  --font-size-3xl: 20px;
+
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+
+  --line-height-tight:   1.25;
+  --line-height-normal:  1.4;
+  --line-height-relaxed: 1.6;
+
+  --letter-spacing-tight:  -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide:   0.02em;
+
+  /* ============ A2 · Spacing (4px grid) ============ */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ============ A2 · Radius ============ */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;   /* 卡片/浮层 */
+  --radius-xl:   16px;   /* 气泡 */
+  --radius-pill: 9999px; /* 按钮/输入框/头像/chip */
+
+  /* ============ A2 · Shadow ============ */
+  --shadow-none:  none;
+  --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg:    0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-sheet: 0 -4px 24px rgba(0, 0, 0, 0.12);
+  --shadow-bar:   0 -1px 0 0 rgba(0, 0, 0, 0.06);
+
+  /* ============ A2 · Border ============ */
+  --border-hairline: 0.5px;
+  --border-thin:     1px;
+  --border-focus:    2px;
+  --border-selected: 1.5px;
+
+  /* ============ A2 · Size / Layout ============ */
+  --viewport-w:      375px;
+  --viewport-h:      812px;
+  --safe-top:        44px;
+  --safe-bottom:     34px;
+  --navbar-h:        44px;
+  --tabbar-h:        49px;
+  --actionbar-h:     52px;
+  --inputbar-h:      52px;
+  --sheet-h:         487px;   /* ≈ 60% × 812 */
+  --sheet-max-h:     60vh;
+  --hit-min:         44px;
+  --icon-inline:     16px;
+  --icon-btn:        20px;
+  --icon-action:     24px;    /* 底部操作栏图标（含三态赞） */
+  --avatar-sm:       32px;
+  --avatar-md:       44px;
+  --avatar-lg:       48px;
+  --thumb:           56px;
+  --gutter:          12px;
+  --gutter-content:  16px;
+
+  /* ============ A2 · Motion ============ */
+  --motion-instant: 100ms;
+  --motion-fast:    150ms;   /* 三态切换 —— 全局收敛值 */
+  --motion-base:    200ms;
+  --motion-slow:    280ms;   /* 浮层上滑 */
+  --motion-deliberate: 400ms;
+
+  --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out:      cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in:       cubic-bezier(0.32, 0, 0.67, 0);
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* 图标三态切换（非弹性，用 scale 关键帧实现『微弹』） */
+  --motion-icon-swap: var(--motion-fast) var(--ease-out);
+  --stagger: 40ms;
+
+  /* ============ A2 · z-index ============ */
+  --z-base:      0;
+  --z-sticky:    100;
+  --z-actionbar: 200;
+  --z-mask:      900;
+  --z-sheet:     1000;
+  --z-toast:     1100;
+
+  /* ============ a11y ============ */
+  --focus-ring: 0 0 0 2px #FFFFFF, 0 0 0 4px rgba(255, 36, 66, 0.55);
+}
+
+/* ==========================================================================
+   三态赞按钮 — 关键帧（核心新交互）
+   说明：『微弹』通过 scale 峰值实现，绝不使用弹性 bezier。
+   ========================================================================== */
+@keyframes like-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+
+@keyframes like-pop-soft {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.10); }
+  100% { transform: scale(1); }
+}
+
+@keyframes icon-morph-in {
+  0%   { transform: scale(0.72) rotate(-8deg); opacity: 0; }
+  60%  { transform: scale(1.08) rotate(0deg);  opacity: 1; }
+  100% { transform: scale(1) rotate(0deg);     opacity: 1; }
+}
+
+@keyframes icon-morph-out {
+  0%   { transform: scale(1) rotate(0deg);   opacity: 1; }
+  100% { transform: scale(0.72) rotate(8deg); opacity: 0; }
+}
+
+@keyframes sheet-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes sheet-slide-down {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
+}
+
+@keyframes mask-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes toast-rise {
+  from { transform: translate(-50%, 8px); opacity: 0; }
+  to   { transform: translate(-50%, 0);   opacity: 1; }
+}
+
+@keyframes countdown-breathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+/* ==========================================================================
+   prefers-reduced-motion — 全部降级为瞬时 / 仅 opacity
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-instant: 0ms;
+    --motion-fast:    0ms;
+    --motion-base:    0ms;
+    --motion-slow:    0ms;
+    --motion-deliberate: 0ms;
+    --stagger: 0ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
