@@ -125,22 +125,33 @@
         } catch (e) { /* 跨域时跳过 */ }
       }
 
+      // 整页自适应高度：iframe 与原型同源，可直接量测内容真实高度。
+      // 关键点：先临时解除内部 html/body 的 height:100% / 100vh 约束，才能拿到“内容自然高度”，
+      // 否则量到的高度会随 iframe 高度反馈放大，导致 iframe 被无限撑大（反馈循环）。
+      var lastFitH = 0;
       function fitHeight() {
         try {
           var doc = frame.contentDocument;
           if (!doc || !doc.documentElement) return;
           hideInnerScrollbar();
           var de = doc.documentElement;
+          var b = doc.body;
+          var prevDe = de.style.height;
+          var prevB = b ? b.style.height : '';
+          de.style.height = 'auto';
+          if (b) b.style.height = 'auto';
           var h = Math.max(
+            b ? b.scrollHeight : 0,
             de.scrollHeight,
-            de.offsetHeight,
-            de.getBoundingClientRect().height,
-            doc.body ? doc.body.scrollHeight : 0
+            doc.documentElement.scrollHeight
           );
-          if (h > 200) {
-            frame.style.maxHeight = 'none';
-            frame.style.height = (h + 1) + 'px'; // +1 抵消取整误差，避免触发滚动条
-          }
+          de.style.height = prevDe;
+          if (b) b.style.height = prevB;
+          if (h < 200) return;
+          if (Math.abs(h - lastFitH) < 2) return; // 稳定后不再重复写入，杜绝抖动/循环
+          lastFitH = h;
+          frame.style.maxHeight = 'none';
+          frame.style.height = h + 'px';
         } catch (e) { /* 跨域时量测不到，保持固定高度 */ }
       }
 
