@@ -125,6 +125,45 @@
         } catch (e) { /* 跨域时跳过 */ }
       }
 
+      // 修复 Next.js 图片优化接口：/_next/image?url=X 是服务端压缩接口，
+      // GitHub Pages 纯静态不存在 → 404 裂图。把这类 src/srcset 全部改写回原图直连。
+      var imgFixerInstalled = false;
+      function installImgFixer() {
+        try {
+          var doc = frame.contentDocument;
+          if (!doc || !doc.documentElement || imgFixerInstalled) return;
+          imgFixerInstalled = true;
+          var w = frame.contentWindow;
+
+          function fixOne(img) {
+            try {
+              var src = img.getAttribute('src') || '';
+              if (src.indexOf('/_next/image') === -1) return;
+              var u = new w.URL(src, doc.baseURI);
+              var orig = u.searchParams.get('url');
+              if (!orig) return;
+              img.removeAttribute('srcset'); // srcSet 里也全是优化接口地址，必须清掉
+              img.removeAttribute('sizes');
+              img.src = orig;
+            } catch (e) {}
+          }
+          function fixAll() {
+            var list = doc.querySelectorAll('img[src*="/_next/image"]');
+            for (var i = 0; i < list.length; i++) fixOne(list[i]);
+          }
+          fixAll();
+          // 兜底：漏网的裂图一报错就立刻换成原图
+          doc.addEventListener('error', function (e) {
+            var t = e.target;
+            if (t && t.tagName === 'IMG') fixOne(t);
+          }, true);
+          // 场景切换会不断重建 <img>：持续监听并修复
+          new w.MutationObserver(function () { fixAll(); }).observe(doc.documentElement, {
+            childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'srcset']
+          });
+        } catch (e) { /* 跨域时跳过 */ }
+      }
+
       // 整页自适应高度：iframe 与原型同源，可直接量测内容真实高度。
       // 关键点：先临时解除内部 html/body 的 height:100% / 100vh 约束，才能拿到“内容自然高度”，
       // 否则量到的高度会随 iframe 高度反馈放大，导致 iframe 被无限撑大（反馈循环）。
@@ -134,6 +173,7 @@
           var doc = frame.contentDocument;
           if (!doc || !doc.documentElement) return;
           hideInnerScrollbar();
+          installImgFixer();
           var de = doc.documentElement;
           var b = doc.body;
           var prevDe = de.style.height;
