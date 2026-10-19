@@ -110,17 +110,36 @@
 
       // 整页自适应高度：iframe 与原型同源，可直接量测内容真实高度，
       // 把 iframe 撑到和内容一样高 → 原型无内部滚动条，跟随外层页面自然滚动。
+      // 隐藏原型内部滚动条（iframe 与主站同源，可直接注入样式）：
+      // 视觉上完全不出现滚动条；同时保留滚动能力作为极端情况兜底。
+      function hideInnerScrollbar() {
+        try {
+          var doc = frame.contentDocument;
+          if (!doc || !doc.head || doc.getElementById('noSbStyle')) return;
+          var st = doc.createElement('style');
+          st.id = 'noSbStyle';
+          st.textContent =
+            'html{scrollbar-width:none!important;-ms-overflow-style:none!important}' +
+            'html::-webkit-scrollbar,body::-webkit-scrollbar{width:0!important;height:0!important;display:none!important}';
+          doc.head.appendChild(st);
+        } catch (e) { /* 跨域时跳过 */ }
+      }
+
       function fitHeight() {
         try {
           var doc = frame.contentDocument;
           if (!doc || !doc.documentElement) return;
+          hideInnerScrollbar();
+          var de = doc.documentElement;
           var h = Math.max(
-            doc.documentElement.scrollHeight,
+            de.scrollHeight,
+            de.offsetHeight,
+            de.getBoundingClientRect().height,
             doc.body ? doc.body.scrollHeight : 0
           );
           if (h > 200) {
             frame.style.maxHeight = 'none';
-            frame.style.height = h + 'px';
+            frame.style.height = (h + 1) + 'px'; // +1 抵消取整误差，避免触发滚动条
           }
         } catch (e) { /* 跨域时量测不到，保持固定高度 */ }
       }
