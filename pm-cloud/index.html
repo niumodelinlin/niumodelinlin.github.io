@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI交互原型生成 | 林玮锋</title>
+  <script>
+    (function() {
+      var t = localStorage.getItem('portfolio-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=20261019">
+  <script>
+    document.documentElement.classList.add('js');
+    // 兜底：若 2.5s 后入场动画脚本仍未就绪，强制显示全部内容
+    setTimeout(function () {
+      if (!window.__revealOk) document.documentElement.classList.remove('js');
+    }, 2500);
+  </script>
+  <script src="../js/theme.js" defer></script>
+  <script src="../js/scroll-animations.js" defer onerror="document.documentElement.classList.remove('js')"></script>
+</head>
+<body>
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-cyan-lg"></div>
+    <div class="blob blob-pink-lg"></div>
+    <div class="blob blob-blue-md"></div>
+    <div class="blob blob-cyan-md"></div>
+    <div class="blob blob-pink-sm"></div>
+    <div class="blob blob-cyan-sm"></div>
+  </div>
+  <main class="container">
+    <header class="page-header reveal">
+      <h1 class="page-title"><span class="text-outline">AI</span><span class="text-solid"> PROTOTYPE</span></h1>
+      <a href="../index.html" class="back-btn">← 返回首页</a>
+    </header>
+
+    <section class="page-content">
+      <article class="work-intro reveal">
+        <h2>AI 交互原型生成</h2>
+        <p>下方为可交互原型的完整内嵌版本（本地自托管副本，与线上版功能、交互完全一致），可直接点击操作。也可点下方按钮在新窗口打开线上原版。</p>
+        <div class="work-meta">
+          <div class="work-meta-item">
+            <span class="work-meta-label">Form</span>
+            <span class="work-meta-value">网页版交互原型</span>
+          </div>
+          <div class="work-meta-item">
+            <span class="work-meta-label">Load</span>
+            <span class="work-meta-value">内嵌本地副本</span>
+          </div>
+          <div class="work-meta-item">
+            <span class="work-meta-label">Stack</span>
+            <span class="work-meta-value">AI 生成 / 可交互</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 原型舞台：iframe 在上层，兜底提示垫在下层 -->
+      <div class="prototype-stage reveal" id="protoStage">
+        <div class="prototype-hint">
+          <p>正在加载交互原型…</p>
+          <a href="https://pm-cloud-phase3.vercel.app/cloud" target="_blank" rel="noopener" class="back-btn">在新窗口打开原型 ↗</a>
+        </div>
+        <iframe id="protoFrame" src="prototype/index.html" title="AI 交互原型" allow="fullscreen; clipboard-write" loading="eager"></iframe>
+      </div>
+
+      <!-- 兜底卡片：JS 判定 iframe 加载失败后显示 -->
+      <div class="prototype-stage prototype-fallback reveal" id="protoFallback" hidden>
+        <h3>原型未能内嵌显示</h3>
+        <p>内嵌副本加载异常。原型本身完全正常，直接在新窗口打开即可获得与网页版一致的交互体验。</p>
+        <a href="https://pm-cloud-phase3.vercel.app/cloud" target="_blank" rel="noopener" class="back-btn">在新窗口打开原型 ↗</a>
+      </div>
+
+      <div class="prototype-open reveal">
+        <a href="https://pm-cloud-phase3.vercel.app/cloud" target="_blank" rel="noopener" class="back-btn">在新窗口打开原型 ↗</a>
+      </div>
+
+      <div class="back-home">
+        <a href="../index.html" class="back-btn">← 返回首页</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2026 林玮锋 · UI设计师</p>
+    </footer>
+  </main>
+
+  <script>
+    // iframe 可见性兜底：被 X-Frame-Options 拦截时，浏览器不会把错误抛给父页面，
+    // 因此用超时兜底——9 秒内确认不了内容窗口，就把空白舞台换成可点击的兜底卡片。
+    (function () {
+      'use strict';
+      var frame = document.getElementById('protoFrame');
+      var stage = document.getElementById('protoStage');
+      var fallback = document.getElementById('protoFallback');
+      if (!frame || !stage || !fallback) return;
+
+      var ok = false;
+
+      function markReady() {
+        window.clearTimeout(timer);
+        var hint = stage.querySelector('.prototype-hint');
+        if (hint) hint.style.display = 'none';
+        stage.dataset.state = 'ready';
+      }
+
+      frame.addEventListener('load', function () {
+        try {
+          // 读到 about:blank 说明当前是浏览器错误页/占位页，视为未加载成功
+          var href = frame.contentWindow.location.href;
+          ok = href && href !== 'about:blank';
+        } catch (e) {
+          // 跨域但允许嵌套：读不到 href 属正常，视为成功
+          ok = true;
+        }
+        if (ok) markReady();
+      });
+
+      // 9 秒仍未确认加载 → 隐藏舞台，显示兜底卡片
+      var timer = window.setTimeout(function () {
+        if (ok) return;
+        stage.style.display = 'none';
+        fallback.hidden = false;
+      }, 9000);
+    })();
+  </script>
+</body>
+</html>
