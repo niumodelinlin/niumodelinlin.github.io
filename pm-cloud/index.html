@@ -42,7 +42,7 @@
     <section class="page-content">
       <article class="work-intro reveal">
         <h2>AI 交互原型生成</h2>
-        <p>下方为可交互原型的完整内嵌版本（本地自托管副本，与线上版功能、交互完全一致），可直接点击操作。也可点下方按钮在新窗口打开线上原版。</p>
+        <p>下方为可交互原型的整页完整展示（本地自托管副本，与线上版功能、交互完全一致），页面跟随滚动查看全部内容，可直接点击操作。也可点下方按钮在新窗口打开线上原版。</p>
         <div class="work-meta">
           <div class="work-meta-item">
             <span class="work-meta-label">Form</span>
@@ -108,6 +108,23 @@
         stage.dataset.state = 'ready';
       }
 
+      // 整页自适应高度：iframe 与原型同源，可直接量测内容真实高度，
+      // 把 iframe 撑到和内容一样高 → 原型无内部滚动条，跟随外层页面自然滚动。
+      function fitHeight() {
+        try {
+          var doc = frame.contentDocument;
+          if (!doc || !doc.documentElement) return;
+          var h = Math.max(
+            doc.documentElement.scrollHeight,
+            doc.body ? doc.body.scrollHeight : 0
+          );
+          if (h > 200) {
+            frame.style.maxHeight = 'none';
+            frame.style.height = h + 'px';
+          }
+        } catch (e) { /* 跨域时量测不到，保持固定高度 */ }
+      }
+
       frame.addEventListener('load', function () {
         try {
           // 读到 about:blank 说明当前是浏览器错误页/占位页，视为未加载成功
@@ -117,7 +134,15 @@
           // 跨域但允许嵌套：读不到 href 属正常，视为成功
           ok = true;
         }
-        if (ok) markReady();
+        if (ok) {
+          markReady();
+          fitHeight();
+          // 字体/图片就位、场景切换都会改变内容高度：多次补偿 + 监听尺寸变化
+          [300, 800, 2000, 4000].forEach(function (d) { setTimeout(fitHeight, d); });
+          try {
+            new ResizeObserver(fitHeight).observe(frame.contentDocument.documentElement);
+          } catch (e) { /* 老浏览器降级为定时补偿 */ }
+        }
       });
 
       // 9 秒仍未确认加载 → 隐藏舞台，显示兜底卡片
